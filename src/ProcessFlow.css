@@ -1,0 +1,409 @@
+/* ── Layout ── */
+.pf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  color: #1e293b;
+}
+
+.pf-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.pf-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.pf-subtitle {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ── Stepper ── */
+.pf-stepper {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 48px;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.pf-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+}
+
+/* Node row: connector + circle */
+.pf-node {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.pf-connector {
+  position: absolute;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: #e2e8f0;
+  z-index: 0;
+  transition: background 0.4s;
+}
+
+.pf-connector.completed {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.pf-connector.active {
+  background: linear-gradient(90deg, #22c55e, #3b82f6);
+}
+
+/* Circle */
+.pf-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  z-index: 1;
+  transition: all 0.35s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pf-step.completed .pf-circle {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+}
+
+.pf-step.active .pf-circle {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.pf-step.pending .pf-circle {
+  background: #f1f5f9;
+  color: #94a3b8;
+  border: 2px solid #e2e8f0;
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Labels & badges */
+.pf-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 6px;
+  color: #334155;
+  line-height: 1.3;
+}
+
+.pf-step.pending .pf-label {
+  color: #94a3b8;
+}
+
+.pf-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.pf-step.completed .pf-status-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+.pf-step.active .pf-status-badge {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.pf-step.pending .pf-status-badge {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.status-icon {
+  font-size: 14px;
+}
+.status-icon.completed {
+  color: #22c55e;
+}
+.status-icon.active {
+  color: #3b82f6;
+  animation: spin 1.5s linear infinite;
+}
+.status-icon.pending {
+  color: #cbd5e1;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pf-timestamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ── Action panel ── */
+.pf-panel {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.pf-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.pf-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #0f172a;
+}
+
+.pf-card p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 18px;
+}
+
+.pf-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.pf-input-row input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pf-input-row input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.pf-input-row button,
+.pf-submit,
+.pf-reset {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pf-input-row button {
+  background: #3b82f6;
+  color: #fff;
+}
+.pf-input-row button:hover:not(:disabled) {
+  background: #2563eb;
+}
+.pf-input-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pf-submit {
+  background: #22c55e;
+  color: #fff;
+  margin-top: 14px;
+  width: 100%;
+}
+.pf-submit:hover:not(:disabled) {
+  background: #16a34a;
+}
+.pf-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Done state */
+.pf-done {
+  text-align: center;
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.pf-done h2 {
+  color: #166534;
+}
+
+.pf-done p {
+  color: #15803d;
+}
+
+.pf-reset {
+  background: #f1f5f9;
+  color: #334155;
+  margin-top: 14px;
+}
+.pf-reset:hover {
+  background: #e2e8f0;
+}
+
+/* Loader */
+.pf-loader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+}
+
+.pf-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.pf-loader span {
+  font-size: 14px;
+  color: #475569;
+}
+
+/* Task verification extras */
+.pf-task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.pf-task-list li {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-left: 3px solid #3b82f6;
+  background: #f8fafc;
+  margin-bottom: 6px;
+  border-radius: 0 6px 6px 0;
+  color: #334155;
+}
+
+.pf-verify-btn {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #8b5cf6;
+  color: #fff;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.pf-verify-btn:hover {
+  background: #7c3aed;
+}
+
+.pf-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #991b1b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pf-retry {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #ef4444;
+  color: #fff;
+  margin-left: auto;
+  transition: background 0.2s;
+}
+
+.pf-retry:hover {
+  background: #dc2626;
+}
+
+.pf-loader code {
+  font-size: 13px;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #334155;
+}
