@@ -11,7 +11,7 @@ import {
   MdEdit,
   MdFactCheck,
 } from "react-icons/md";
-import "./ProcessFlow.css";
+import "./ProcessFlow.scss";
 
 type StepStatus = "pending" | "active" | "completed";
 
@@ -51,14 +51,14 @@ const INITIAL_STEPS: Step[] = [
     id: 1,
     label: "Teams Call with Client",
     icon: <MdVideoCall />,
-    status: "completed",
-    timestamp: now(),
+    status: "active",
+    timestamp: null,
   },
   {
     id: 2,
     label: "Call Transcription",
     icon: <MdTranscribe />,
-    status: "active",
+    status: "pending",
     timestamp: null,
   },
   {
@@ -114,11 +114,15 @@ export default function ProcessFlow() {
     );
   }, []);
 
-  /* Step 2 → 3 */
-  const handleTranscribe = () => {
+  /* Step 1 → 2 → 3: providing the Teams URL completes Step 1,
+     then transcription (Step 2) runs automatically */
+  const handleTeamsUrl = () => {
     if (!teamsUrl.trim()) return;
-    advance(2);
-    simulateAiGeneration();
+    advance(1);
+    setTimeout(() => {
+      advance(2);
+      simulateAiGeneration();
+    }, 1500);
   };
 
   /* Step 3: simulated AI summary */
@@ -186,8 +190,8 @@ export default function ProcessFlow() {
     setSteps(
       INITIAL_STEPS.map((s, i) =>
         i === 0
-          ? { ...s, status: "completed", timestamp: now() }
-          : { ...s, status: i === 1 ? "active" : "pending", timestamp: null }
+          ? { ...s, status: "active", timestamp: null }
+          : { ...s, status: "pending", timestamp: null }
       )
     );
     setTeamsUrl("");
@@ -235,13 +239,13 @@ export default function ProcessFlow() {
 
       {/* ── Action panel ── */}
       <div className="pf-panel">
-        {/* Step 2 — Transcription */}
-        {steps[1].status === "active" && (
+        {/* Step 1 — Teams Call: provide URL to mark complete */}
+        {steps[0].status === "active" && (
           <div className="pf-card">
-            <h2>Step 2 — Provide Teams Meeting URL</h2>
+            <h2>Step 1 — Teams Call with Client</h2>
             <p>
-              Paste the Microsoft Teams meeting ID / URL to trigger
-              transcription.
+              Paste the Microsoft Teams meeting URL to confirm the call
+              took place.
             </p>
             <div className="pf-input-row">
               <input
@@ -250,9 +254,20 @@ export default function ProcessFlow() {
                 value={teamsUrl}
                 onChange={(e) => setTeamsUrl(e.target.value)}
               />
-              <button onClick={handleTranscribe} disabled={!teamsUrl.trim()}>
-                Transcribe
+              <button onClick={handleTeamsUrl} disabled={!teamsUrl.trim()}>
+                Confirm Call
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 2 — Transcription (runs automatically) */}
+        {steps[1].status === "active" && (
+          <div className="pf-card">
+            <h2>Step 2 — Call Transcription</h2>
+            <div className="pf-loader">
+              <div className="pf-spinner" />
+              <span>Transcribing the Teams call…</span>
             </div>
           </div>
         )}

@@ -1,0 +1,411 @@
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$green-800: #166534;
+$green-50: #f0fdf4;
+$green-100: #dcfce7;
+$green-200: #bbf7d0;
+
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-100: #dbeafe;
+$blue-800: #1e40af;
+
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-900: #0f172a;
+$slate-text: #1e293b;
+
+$purple-500: #8b5cf6;
+$purple-600: #7c3aed;
+
+$red-50: #fef2f2;
+$red-200: #fecaca;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-900: #991b1b;
+
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-full: 999px;
+
+@keyframes pulse-ring {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba($blue-500, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba($blue-500, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Layout ──
+.pf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  color: $slate-text;
+}
+
+.pf-header {
+  text-align: center;
+  margin-bottom: 48px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: $slate-900;
+    letter-spacing: -0.5px;
+  }
+}
+
+.pf-subtitle {
+  font-size: 15px;
+  color: $slate-500;
+  margin: 0;
+}
+
+// ── Stepper ──
+.pf-stepper {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 48px;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.pf-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+
+  &.completed {
+    .pf-circle {
+      background: linear-gradient(135deg, $green-500, $green-600);
+      color: #fff;
+    }
+    .pf-status-badge {
+      background: $green-100;
+      color: $green-800;
+    }
+  }
+
+  &.active {
+    .pf-circle {
+      background: linear-gradient(135deg, $blue-500, $blue-600);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba($blue-500, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+    .pf-status-badge {
+      background: $blue-100;
+      color: $blue-800;
+    }
+  }
+
+  &.pending {
+    .pf-circle {
+      background: $slate-100;
+      color: $slate-400;
+      border: 2px solid $slate-200;
+    }
+    .pf-label {
+      color: $slate-400;
+    }
+    .pf-status-badge {
+      background: $slate-100;
+      color: $slate-400;
+    }
+  }
+}
+
+.pf-node {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.pf-connector {
+  position: absolute;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: $slate-200;
+  z-index: 0;
+  transition: background 0.4s;
+
+  &.completed { background: linear-gradient(90deg, $green-500, $green-600); }
+  &.active    { background: linear-gradient(90deg, $green-500, $blue-500); }
+}
+
+.pf-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  z-index: 1;
+  transition: all 0.35s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+// ── Labels & badges ──
+.pf-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 6px;
+  color: $slate-700;
+  line-height: 1.3;
+}
+
+.pf-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: $radius-full;
+}
+
+.status-icon {
+  font-size: 14px;
+
+  &.completed { color: $green-500; }
+  &.active    { color: $blue-500; animation: spin 1.5s linear infinite; }
+  &.pending   { color: $slate-300; }
+}
+
+.pf-timestamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: $slate-500;
+  margin-top: 4px;
+}
+
+// ── Action panel ──
+.pf-panel {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.pf-card {
+  background: #fff;
+  border: 1px solid $slate-200;
+  border-radius: $radius-lg;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: $slate-900;
+  }
+
+  p {
+    font-size: 14px;
+    color: $slate-500;
+    margin: 0 0 18px;
+  }
+}
+
+// ── Shared button base ──
+%btn-base {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pf-input-row {
+  display: flex;
+  gap: 10px;
+
+  input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid $slate-300;
+    border-radius: $radius-md;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: $blue-500;
+      box-shadow: 0 0 0 3px rgba($blue-500, 0.15);
+    }
+  }
+
+  button {
+    @extend %btn-base;
+    background: $blue-500;
+    color: #fff;
+
+    &:hover:not(:disabled) { background: $blue-600; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+}
+
+.pf-submit {
+  @extend %btn-base;
+  background: $green-500;
+  color: #fff;
+  margin-top: 14px;
+  width: 100%;
+
+  &:hover:not(:disabled) { background: $green-600; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid $slate-300;
+  border-radius: $radius-md;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: $blue-500;
+    box-shadow: 0 0 0 3px rgba($blue-500, 0.15);
+  }
+}
+
+// ── Done state ──
+.pf-done {
+  text-align: center;
+  color: $green-800;
+  background: $green-50;
+  border-color: $green-200;
+
+  h2 { color: $green-800; }
+  p  { color: $green-700; }
+}
+
+.pf-reset {
+  @extend %btn-base;
+  background: $slate-100;
+  color: $slate-700;
+  margin-top: 14px;
+
+  &:hover { background: $slate-200; }
+}
+
+// ── Loader ──
+.pf-loader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+
+  span {
+    font-size: 14px;
+    color: $slate-600;
+  }
+
+  code {
+    font-size: 13px;
+    background: $slate-100;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: $slate-700;
+  }
+}
+
+.pf-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid $slate-200;
+  border-top-color: $blue-500;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+// ── Task verification ──
+.pf-task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+
+  li {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-left: 3px solid $blue-500;
+    background: $slate-50;
+    margin-bottom: 6px;
+    border-radius: 0 $radius-sm $radius-sm 0;
+    color: $slate-700;
+  }
+}
+
+.pf-verify-btn {
+  @extend %btn-base;
+  background: $purple-500;
+  color: #fff;
+  width: 100%;
+
+  &:hover { background: $purple-600; }
+}
+
+.pf-error {
+  background: $red-50;
+  border: 1px solid $red-200;
+  border-radius: $radius-md;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: $red-900;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pf-retry {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  background: $red-500;
+  color: #fff;
+  margin-left: auto;
+  transition: background 0.2s;
+
+  &:hover { background: $red-600; }
+}
